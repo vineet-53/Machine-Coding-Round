@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { coursesData } from "../../data/courses.data";
 import CourseCard from "../common/courses/CourseCard";
 
-export default function CoursesList() {
+export default function CoursesList({ data }) {
   const startId = useRef(null);
   const lastId = useRef(null);
-  const [courses, setCourses] = useState(coursesData?.data);
+  const [courses, setCourses] = useState(data);
   const [drag, setDrag] = useState(false);
   function handleUpdateList(fromIndex, toIndex) {
     const copyCoursesList = courses.filter((item, index) => {
@@ -24,7 +23,27 @@ export default function CoursesList() {
       handleUpdateList(fromIndex, toIndex);
     }
   }
-  useEffect(() => {}, [courses]);
+  function moveCardup(id) {
+    let newIndex = id - 1;
+    if (id > 0) {
+      handleUpdateList(id, newIndex);
+    }
+  }
+  function moveCarddown(id) {
+    let newIndex = id + 1;
+    if (id < courses.length) {
+      handleUpdateList(id, newIndex);
+    }
+  }
+  function removeCard(id) {
+    setCourses(
+      courses.filter((item, index) => {
+        if (index != id) {
+          return item;
+        }
+      }),
+    );
+  }
   return (
     <div className="flex flex-col gap-y-3 px-4 md:px-4 py-4">
       {courses?.map((course, index) => {
@@ -41,6 +60,9 @@ export default function CoursesList() {
             dragend={dragend}
             drag={drag}
             setDrag={setDrag}
+            moveCardup={moveCardup}
+            moveCarddown={moveCarddown}
+            removeCard={removeCard}
           />
         );
       })}

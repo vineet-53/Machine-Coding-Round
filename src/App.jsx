@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="">
       <Routes>
-        <Route path="/" element={<Navigate to="/course-list" />} />
+        <Route path="/" element={<Navigate to="/otp-form" />} />
         <Route path="/otp-form" element={<Otp />} />
         <Route path="/course-list" element={<Courses />} />
         <Route path="/batches" element={""} />
