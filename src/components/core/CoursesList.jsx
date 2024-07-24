@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import CourseCard from "../common/courses/CourseCard";
+import toast from "react-hot-toast";
 
 export default function CoursesList({ data }) {
   const startId = useRef(null);
@@ -43,6 +44,7 @@ export default function CoursesList({ data }) {
         }
       }),
     );
+    toast.success("Removed Card");
   }
   return (
     <div className="flex flex-col gap-y-3 px-4 md:px-4 py-4">

@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Otp from "./pages/Otp";
 import Courses from "./pages/Courses.jsx";
 import Error from "./pages/Error";
-
+import Navbar from "./components/core/Navbar.jsx";
 function App() {
   return (
     <div className="">
