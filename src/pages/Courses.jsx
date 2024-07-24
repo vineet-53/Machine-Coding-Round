@@ -16,7 +16,7 @@ export default function Courses() {
         <CoursesList data={courses?.data ? courses.data : []} />
       </Container>
 
-      <StickyLogo />
+      <StickyLogo styles="left-[100%] md:left-[89%] bottom-10" />
     </div>
   );
 }
