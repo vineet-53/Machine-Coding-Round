@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { coursesData } from "../../data/courses.data";
 import CourseCard from "../common/courses/CourseCard";
 
@@ -24,7 +24,7 @@ export default function CoursesList() {
       handleUpdateList(fromIndex, toIndex);
     }
   }
-
+  useEffect(() => {}, [courses]);
   return (
     <div className="flex flex-col gap-y-3 px-4 md:px-4 py-4">
       {courses?.map((course, index) => {
@@ -36,9 +36,11 @@ export default function CoursesList() {
             lastId={lastId}
             title={course.title}
             category={course.category}
-            price={course.price}
+            price={course?.price}
             imgSrc={course.img}
             dragend={dragend}
+            drag={drag}
+            setDrag={setDrag}
           />
         );
       })}
