@@ -9,12 +9,12 @@ export default {
         tertiary: "#112D4E",
         others: "#3F72AF",
       },
-      cards: {
+      courses: {
         primary: "#D2E3C8",
         secondary: "#4F6F52",
         tertiary: "#DBFFCE",
       },
-      tables: {
+      batches: {
         primary: "#E2BBE9",
         secondary: "#444B79",
         tertiary: "#6C6BAF",

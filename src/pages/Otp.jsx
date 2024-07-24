@@ -1,3 +1,4 @@
+import StickyLogo from "../components/common/StickyLogo";
 import OtpForm from "../components/core/OtpForm";
 import { Link } from "react-router-dom";
 export default function Otp() {
@@ -9,6 +10,7 @@ export default function Otp() {
         </h1>
         <OtpForm />
       </div>
+      <StickyLogo />
     </div>
   );
 }
