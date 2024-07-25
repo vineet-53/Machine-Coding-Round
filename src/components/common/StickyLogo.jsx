@@ -1,9 +1,9 @@
 const url = "https://chaicode.com";
+import Logo from "../../assets/Logo.jpg";
 export default function StickyLogo({ styles }) {
   return (
     <img
-      src="../src/assets/Logo.jpg"
-      alt=""
+      src={Logo}
       onClick={() => {
         window.open(url);
       }}
