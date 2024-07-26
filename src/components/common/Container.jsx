@@ -20,8 +20,8 @@ export default function Container({
         >
           {subTitle}
         </p>
+        {children}
       </div>
-      {children}
     </div>
   );
 }

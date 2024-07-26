@@ -1,0 +1,80 @@
+import { useEffect, useRef, useState } from "react";
+import Container from "../components/common/Container";
+import StickyLogo from "../components/common/StickyLogo";
+import CoursesList from "../components/core/CoursesList";
+import { batches } from "../data/batches.data.js";
+import SearchBar from "../components/common/SearchBar.jsx";
+export default function Batches() {
+  const searchInutRef = useRef(null);
+  const giveDataPerPage = (start, end, size = 10) => {
+    const data = Array(size).fill(batches.data, start, end);
+    console.log(data);
+    return data;
+  };
+  const [batchesData, setBatchData] = useState(giveDataPerPage(0, 9));
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (
+        (event.metaKey && event.key === "k") ||
+        (event.altKey && event.key === "k")
+      ) {
+        searchInutRef.current.focus();
+      }
+      if (event.key == "Escape") {
+        searchInutRef.current.blur();
+      }
+      console.log(event);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+  return (
+    <div className="flex-col gap-y-3 bg-batches-primary justify-center items-center py-10 min-h-screen justify-center max-lg:px-4 items-center flex">
+      <h1 className="text-center mb-14  text-batches-secondary font-extrabold text-5xl md:text-7xl">
+        {batches.heading}
+      </h1>
+      <Container
+        title={batches.title}
+        subTitle={batches.subTitle}
+        batches={true}
+      >
+        <SearchBar ref={searchInutRef} />
+        <table>
+          <thead className="border w-full border-[#000000] rounded-md ">
+            <tr className="flex justify-evenly w-full">
+              {batches.head.map((item, index) => {
+                return (
+                  <th
+                    key={index}
+                    className={`capitalize ${item == "title" ? "flex-[2]" : "flex-1"} px-2`}
+                  >
+                    {item}
+                  </th>
+                );
+              })}
+            </tr>
+          </thead>
+          <tbody>
+            {batchesData.map((batch, index) => {
+              return (
+                <tr>
+                  <td className={``}>{batch.title}</td>
+                  <td className={``}>{batch.startDate}</td>
+                  <td className={``}>{batch.endDate}</td>
+                  <td className={``}>{batch.price}</td>
+                  <td className={``}>{batch.status}</td>
+                  <td className={``}>{batch.days}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </Container>
+
+      <StickyLogo styles="left-[100%] md:left-[89%] bottom-10" />
+    </div>
+  );
+}
