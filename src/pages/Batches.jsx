@@ -11,6 +11,7 @@ export default function Batches() {
   const [size, setSize] = useState(10);
   const [limitExceed, setLimitExceed] = useState(false);
   const [currentBatchSize, setCurrentBatchSize] = useState(size);
+  const [searching, setSearching] = useState(false);
   const giveDataPerPage = (start, size) => {
     if (batches.data?.slice(start, size)) {
       return batches.data.slice(start, size);
@@ -32,7 +33,22 @@ export default function Batches() {
       setSize(size + currentBatchSize);
     }
   };
-  const handleSearch = (e) => {};
+  const handleClearSearch = () => {
+    setSearching(false);
+    setBatchData(giveDataPerPage(start, size));
+  };
+  const handleSearch = (e) => {
+    setSearching(true);
+    const searchValue = searchInutRef.current.value;
+    const regex = new RegExp(`.*${searchValue}.*`);
+    const array = batchesData.filter((batch, index) => {
+      const string = batch.title.split(" ").join("").toLowerCase();
+      if (regex.test(string)) {
+        return batch;
+      }
+    });
+    setBatchData(array);
+  };
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (
@@ -60,7 +76,7 @@ export default function Batches() {
     } else {
       setLimitExceed(false);
     }
-  }, [start, size, currentBatchSize, limitExceed]);
+  }, [start, searching, size, currentBatchSize, limitExceed]);
   return (
     <div className="flex-col gap-y-3 bg-batches-primary justify-center items-center py-10 min-h-screen justify-center max-lg:px-4 items-center flex">
       <h1 className="text-center mb-14  text-batches-secondary font-extrabold text-5xl md:text-7xl">
@@ -71,7 +87,11 @@ export default function Batches() {
         subTitle={batches.subTitle}
         batches={true}
       >
-        <SearchBar onSearch={handleSearch} ref={searchInutRef} />
+        <SearchBar
+          handleClearSearch={handleClearSearch}
+          onSearch={handleSearch}
+          ref={searchInutRef}
+        />
         <Tables tableHead={batches.head} tableData={batchesData} />
         <div className="flex justify-end">
           <div className="justify-center items-center flex gap-3">
@@ -79,6 +99,7 @@ export default function Batches() {
             <select
               name="rows"
               id="selectRows"
+              disabled={searching}
               onChange={(e) => {
                 const batchSize = parseInt(e.target.value);
                 setCurrentBatchSize(batchSize);
